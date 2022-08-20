@@ -1,0 +1,146 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <script type="text/javascript" src="brython.js"></script>
+    <script type="text/javascript" src="brython_stdlib.js"></script>
+
+</head>
+<style>
+    .grid-container {
+        display: grid;
+        grid-template: auto / 100px 100px 100px 180px;
+        grid-gap: 50px;
+        margin-top: 0%;
+        padding: 30px;
+    }
+
+    .grid-container>div {
+
+        text-align: center;
+        padding: 50px 0;
+        font-size: 18px;
+    }
+
+    table {
+        border: 1;
+    }
+
+    #sentdata {
+        float: left;
+        margin-top: 18px;
+        margin-left: 40px;
+    }
+
+    #tocpu {
+        float: left;
+    }
+</style>
+
+<body onload="brython()">
+
+    <script type="text/python">
+       import app
+        
+    </script>
+    <p>Please use one endianness throughout a use case. Reset to use a different endianness.<br>
+        Memory Replacement policy: FIFO</p>
+    <div class="grid-container" id="grid">
+
+        <div class="item1">
+            <table border="1">
+                <caption>Virtual Memory</caption>
+                <tbody id="vmemo">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="item2" style="margin-top: 50%;">
+            <div>
+                <p style="color: tomato;" id="pterr"></p>
+                <table border="1">
+                    <caption>Page Table</caption>
+                    <tbody id="ptable">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="item3">
+            <div>
+                <p style="color: tomato;" id="tlberr"></p>
+                <table border="1">
+                    <caption>TLB</caption>
+                    <tbody id="tlb">
+
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <table border="1">
+                <caption>Main Memory</caption>
+                <tbody id="memo">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="item4">
+            <table border="1">
+                <p style="color: tomato;" id="cacheerr"></p>
+                <caption>Cache Memory</caption>
+                <tbody id="cache">
+
+                </tbody>
+            </table>
+
+            <div>
+
+
+                <br>
+                <div>
+                    <p style="color: tomato;" id="error"></p>
+                    <input id="vaddr" type="text" placeholder="Virtual Address Here...">
+                    <p id="drop">Cache Strategy:<br><sub>[Direct-Mapping]</sub><br></p>
+
+                    <button style="margin-bottom: 20px;" id="submit" type="submit">Submit</button>
+                    <button style="margin-bottom: 20px;" id="clear" type="submit">Clear</button>
+
+                </div>
+                <div>
+                    <p id="tocpu"> To CPU ➡️</p>
+
+                    <p id="sentdata"></p>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
+<script>
+
+    var target = document.getElementById('sentdata');
+    var Nodes = [];
+    var observer = new MutationObserver(function (mutations) {
+        if (mutations[0].type === 'characterData') {
+            var trgt = mutations[0].target.parentElement;
+            trgt.animate([{ left: "10%" },
+            { left: "20%" }, { left: "30%" }, { left: "40%" }, { left: "50%" }], 3000);
+        }
+
+    });
+
+    observer.observe(target, {
+        attributes: true,
+        childList: true,
+        characterData: true,
+        subtree: true,
+        characterDataOldValue: true,
+    });
+
+</script>
